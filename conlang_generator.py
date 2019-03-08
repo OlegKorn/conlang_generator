@@ -63,6 +63,10 @@ m.show_morph_output()
 
 #o@pc:~/python/conlang$ python3 conlang_generator.py
 #['θugzā', 'zyðza', 'zubfo', 'baqðe', 'ňermu', 'datqe', 'līfňa', 'pyθhā', 'tuckha']
+#['ðīnlæ', 'nyfθu', 'khīzty', 'ryvʧo', 'dohdæ', 'kiwva', 'mycðe', 'qækhzī', 'wæðzu']
+#['qofkā', 'jīkki', 'nebkho', 'bonðu', 'ňīhjā', 'khāgbu', 'kuhsi', 'ňuksæ', 'zābcy']
+#['jotma', 'zymθy', 'tizvī', 'doʧňā', 'soshu', 'jīgte', 'tælqi', 'ðeztā', 'waczo']
+
 
 
 

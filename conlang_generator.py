@@ -3,71 +3,56 @@ import random
 import string    
 
 
-VOWS = ['a','e','y','u','i','o']
-CONS = ['q','z','w','s','x','d','c','r','f','v','t','g','b','h','n','j','m','k','l','p']
+VOWS = ['a','e','y','u','i','o', 'æ', 'è', 'é', 'à', 'ā', 'ī']
 
+CONS = ['q','z','w','s','x','d','c','r',
+        'f','v','t','g','b','h','n','j',
+        'm','k','l','p','ʧ','θ','ð','z','ň' 
+]
 
-class Morphem: 
-    '''
-    morphem has params:
-    --lenght
-    --type of letters passed in - for example, v.v.c. 
-    '''
+output = []
 
-    '''
-    initialize the class with 1 param that every instance will have
-    '''
-    def __init__(self, graphems_set, counter=True):
-        self.graphems_set = graphems_set
-        self.graphems_list = list(self.graphems_set)
-        self.counter = len(graphems_set)
-  
+class Morpheme: 
+    def __init__(self, data):
+        self.data = data
+        self.len = len(self.data)
 
-    def show_info(self):
-        print('graphems_set is {}\n'
-          'len(graphems_set) is {}' 
-          .format(self.graphems_list, self.counter)            
-        )        
-  
     
-    #generate the needed random letters in accordance with the passed in ones
-    def generate(self):
-        '''
-        generates morhpem after checking the type out
-        (appends grapheme of needed type to a list * indicator) times     
-        '''
-        
-        self.pre_output = ''
-        
-        #define the type of each graphem
-        while self.counter != 0:
+    # recognizes a graphem type to generate
+    def create_graph(self):
+        lexem = ''
+        for i in self.data:
 
-            for i in self.graphems_list:
+            if i == 'v':
+                v = random.choice(VOWS)
+                lexem += v
+            elif i == 'c':
+                c = random.choice(CONS)
+                lexem += c
+    
+        output.append(lexem) 
 
-                #if code == "vowel" 
-                if i == 'v':
-                    v = random.choice(VOWS)
-                    self.pre_output += v
-
-                #if code == "consonant" 
-                elif i == 'c':
-                    c = random.choice(CONS)
-                    self.pre_output += c
-                self.counter -= 1
-
-        self.output = list(self.pre_output) 
-
-
-
+    
     def get_output(self):
-        print(self.output)
-        print(self.graphems_list)
+        print(output)
 
 
-m = Morphem('vcvc')
-m.generate()
-m.get_output()
+    def multiply(self, times:int):
+        self.times = times
+        while self.times > 1:
+            m = Morpheme('vcvc')
+            m.create_graph()
+            self.times -= 1
+
+        #m.get_output()
+        
 
 
+
+
+m = Morpheme('vcvc')
+m.multiply(20) #--> ['iðīw', 'ātèq', 'esuz', 'osàʧ', 'yʧæd', 'yhèg', 'èpej', 'àvok', 'oxaz', 'æsax', 'ikik', 'èboθ', 'anàz', 'æðāz', 'àxul', 'amaʧ', 'ālèc', 'ézīg', 'odec']
+
+print(output)
 
 

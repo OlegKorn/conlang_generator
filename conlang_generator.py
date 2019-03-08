@@ -5,7 +5,7 @@ import string
 
 VOWS = ['a','e','y','u','i','o', 'æ', 'ā', 'ī']
 
-CONS = ['q','z','w','s','x','d','c','r',
+CONS = ['q','z','w','s','kh','d','c','r',
         'f','v','t','g','b','h','n','j',
         'm','k','l','p','ʧ','θ','ð','z','ň' 
 ]
@@ -15,12 +15,11 @@ CONS = ['q','z','w','s','x','d','c','r',
 class Morpheme:
     '''This class creates a morpheme.
 
-       Morpheme is limited by 3 params:
-               -minimum size (2 by default)
-               -maximum size (3 by defaut)
-               -2 types of grapheme: vowel | consonant 
+    Morpheme is limited by 3 params:
+        -minimum size (2 by default)
+        -maximum size (3 by defaut)
+        -2 types of grapheme: vowel | consonant 
     '''
-    
 
     def __init__(self, min_size:int=2, max_size:int=3, passed=False):
         self.min_size = min_size
@@ -28,36 +27,24 @@ class Morpheme:
         self.passed = passed
         self.morph_output = []
 
+
     
-    def generate_morph(self):
-        s = ''
+    def generate_morph(self, counter):
+        '''counter = number of needed morphems * 5
+        '''
+        self.counter = counter
+        while self.counter > 1:
+            s = ''
+            for i in self.passed:
 
-        for i in self.passed:
-
-            if i == 'c':
-                c = random.choice(CONS)
-                s += c
-            else:
-                v = random.choice(VOWS)
-                s += v
-        self.morph_output.append(s)
-
-
-
-    def multiply_morph_output(self, morph_multiply_index:int):
-        self.morph_multiply_index = morph_multiply_index
-
-        while self.morph_multiply_index != 0:
-           # generate_morph = self.generate_morph()
-           # morph = self.return_morph_output()
-            input()
-            self.morph_output.append(self.generate_morph())
-            print(self.morph_output)
-            self.morph_multiply_index -= 1
-
-
-
-
+                if i == 'c':
+                    c = random.choice(CONS)
+                    s += c
+                else:
+                    v = random.choice(VOWS)
+                    s += v
+            self.counter -= 1
+            self.morph_output.append(s)
 
 
 
@@ -68,6 +55,14 @@ class Morpheme:
 
     def show_morph_output(self):
         print(self.morph_output)   
+
+
+m = Morpheme(2, 4, 'cvccv')
+m.generate_morph(10)
+m.show_morph_output() 
+
+#o@pc:~/python/conlang$ python3 conlang_generator.py
+#['θugzā', 'zyðza', 'zubfo', 'baqðe', 'ňermu', 'datqe', 'līfňa', 'pyθhā', 'tuckha']
 
 
 
@@ -94,6 +89,3 @@ class Prefix:
 
 
 
-m = Morpheme(2, 4, 'cvvvccv')
-m.generate_morph()
-m.multiply_morph_output(10)

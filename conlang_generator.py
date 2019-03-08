@@ -3,67 +3,57 @@ import random
 import string    
 
 
-VOWS = ['a','e','y','u','i','o', 'æ', 'è', 'é', 'à', 'ā', 'ī']
+VOWS = ['a','e','y','u','i','o', 'æ', 'ā', 'ī']
 
 CONS = ['q','z','w','s','x','d','c','r',
         'f','v','t','g','b','h','n','j',
         'm','k','l','p','ʧ','θ','ð','z','ň' 
 ]
 
-output = []
 
-class Morpheme: 
-    def __init__(self, data):
-        self.data = data
 
+class Morpheme:
+    '''This class creates a morpheme.
+
+       Morpheme is limited by 3 params:
+               -minimum size (2 by default)
+               -maximum size (3 by defaut)
+               -2 types of grapheme: vowel | consonant 
+    '''
+    
+
+    def __init__(self, min_size:int=2, max_size:int=3, passed=False):
+        self.min_size = min_size
+        self.max_size = max_size
+        self.passed = passed
+        self.morph_output = []
 
     
-    # recognizes a graphem type to generate
-    def create_graph(self):
-        lexem = ''
-        for i in self.data:
+    def generate_morph(self):
+        s = ''
 
-            if i == 'v':
-                v = random.choice(VOWS)
-                lexem += v
-            elif i == 'c':
+        for i in self.passed:
+
+            if i == 'c':
                 c = random.choice(CONS)
-                lexem += c
-    
-        output.append(lexem) 
-
-    
-    def get_output(self):
-        print(output)
+                s += c
+            else:
+                v = random.choice(VOWS)
+                s += v
+        self.morph_output.append(s)
 
 
-    def multiply(self, times:int):
-        self.times = times
-        m = Morpheme('vcvc')
 
-        while self.times > 1:
-            
-            m.create_graph()
-            self.times -= 1
+    def multiply_morph_output(self, morph_multiply_index:int):
+        self.morph_multiply_index = morph_multiply_index
 
-        #m.get_output()
-        
-
-def choose():
-    
-    types = [
-        'cvcv',
-        'cvvc',
-        'vvc',
-        'vvccvv',
-        'cvvvc'
-    ]
-
-    for i in types:
-        m = Morpheme(i)
-        m.create_graph()
-    
-    print(output)
+        while self.morph_multiply_index != 0:
+           # generate_morph = self.generate_morph()
+           # morph = self.return_morph_output()
+            input()
+            self.morph_output.append(self.generate_morph())
+            print(self.morph_output)
+            self.morph_multiply_index -= 1
 
 
 
@@ -71,11 +61,39 @@ def choose():
 
 
 
-
-#m = Morpheme('vcvc')
-#m.multiply(20)
-
-#print(output)
-choose()
+    def return_morph_output(self):
+        return self.morph_output
 
 
+
+    def show_morph_output(self):
+        print(self.morph_output)   
+
+
+
+
+class Prefix:
+    '''This class creates a prefix.
+
+       This class is limited by 3 params:
+               -minimum size (1 by default)
+               -maximum size (3 by defaut)
+               -2 types of grapheme: vowel | consonant 
+    '''
+
+
+    def __init__(self, min_size:int=1, max_size:int=3, passed=False):
+        self.min_size = min_size
+        self.max_size = max_size
+        self.passed = passed
+
+
+
+
+
+
+
+
+m = Morpheme(2, 4, 'cvvvccv')
+m.generate_morph()
+m.multiply_morph_output(10)

@@ -39,8 +39,10 @@ class Morpheme:
 
     def multiply(self, times:int):
         self.times = times
+        m = Morpheme('vcvc')
+        
         while self.times > 1:
-            m = Morpheme('vcvc')
+            
             m.create_graph()
             self.times -= 1
 
@@ -51,7 +53,7 @@ class Morpheme:
 
 
 m = Morpheme('vcvc')
-m.multiply(20) #--> ['iðīw', 'ātèq', 'esuz', 'osàʧ', 'yʧæd', 'yhèg', 'èpej', 'àvok', 'oxaz', 'æsax', 'ikik', 'èboθ', 'anàz', 'æðāz', 'àxul', 'amaʧ', 'ālèc', 'ézīg', 'odec']
+m.multiply(20)
 
 print(output)
 

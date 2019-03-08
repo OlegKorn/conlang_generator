@@ -15,7 +15,7 @@ output = []
 class Morpheme: 
     def __init__(self, data):
         self.data = data
-        self.len = len(self.data)
+
 
     
     # recognizes a graphem type to generate
@@ -40,7 +40,7 @@ class Morpheme:
     def multiply(self, times:int):
         self.times = times
         m = Morpheme('vcvc')
-        
+
         while self.times > 1:
             
             m.create_graph()
@@ -49,12 +49,33 @@ class Morpheme:
         #m.get_output()
         
 
+def choose():
+    
+    types = [
+        'cvcv',
+        'cvvc',
+        'vvc',
+        'vvccvv',
+        'cvvvc'
+    ]
+
+    for i in types:
+        m = Morpheme(i)
+        m.create_graph()
+    
+    print(output)
 
 
 
-m = Morpheme('vcvc')
-m.multiply(20)
 
-print(output)
+
+
+
+
+#m = Morpheme('vcvc')
+#m.multiply(20)
+
+#print(output)
+choose()
 
 

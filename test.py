@@ -42,12 +42,18 @@ def generate_morph():
             generated_morph += c_choosen
 
     res.append(generated_morph)
-    print(res)
+
 
         
+def multiply(index):
+    index = index
+    while index != 0:
+        generate_morph()
+        index -= 1
+    print(res)
 
     
 
 
-
-generate_morph()
+multiply(10)
+#generate_morph()

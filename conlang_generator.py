@@ -83,15 +83,9 @@ class Morpheme:
 
 
 m = Morpheme()
-m.morph_multiply(20)
+m.morph_multiply(20) #['khyw', 'āf', 'æt', 'ejc', 'θroe', 'na', 'uar', 'yuuf', 'tqpz', 'īgň', 'zň', 'noʧ', 'cāðy', 'ccvī', 'eīik', 'aw', 'ia', 'tej', 'aī', 'kāky']
 m.show_morph_output()
 #m.generate_morph()
-
-#m.show_morph_output() 
-
-#o@pc:~/python/conlang$ python3 conlang_generator.py
-#['θugzā', 'zyðza', 'zubfo', 'baqðe', 'ňermu', 'datqe', 'līfňa', 'pyθhā', 'tuckha']
-
 
 
 
@@ -142,28 +136,3 @@ class Prefix(Morpheme):
 
     def show_pref_output(self):
         print(self.pref_output)   
-
-
-
-#p = Prefix(1,2,'vv')
-#p.set_pref_output()
-#p.generate_pref(5)
-#p.show_pref_output()
-
-
-#https://www.geeksforgeeks.org/python-concatenate-two-lists-element-wise/
-#res = [i + j for i, j in zip(p.pref_output, m.morph_output)]
-#for i,j in zip(p.pref_output, m.morph_output): 
-#    print(i,j)
-
-
-
-
-
-#['syvðæ', 'lāzræ', 'wībma', 'ʧīcra', 'zāvða', 'highī', 'vīnza', 'θivmī', 'lījfa']
-#['le-', 'wi-', 'qæ-', 'fi-', 'ti-', 'væ-', 'to-', 'gi-', 'be-']
-#['le-syvðæ', 'wi-lāzræ', 'qæ-wībma', 'fi-ʧīcra', 'ti-zāvða', 'væ-highī', 
-#'to-vīnza', 'gi-θivmī', 'be-lījfa']
-
-#
-

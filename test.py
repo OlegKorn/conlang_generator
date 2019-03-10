@@ -1,10 +1,12 @@
 import random
 
 
-VOWS = ['a', 'e', 'y', 'u', 'i', 'o']
-CONS = ['q','z','w','s','kh','d','c','r',
-   'f','v','t','g','b','h','n','j',
-   'm','k','l','p','ʧ','θ','ð','z','ň' 
+#to increase the "depth of choice" there are more 2 sets of same entities here
+VOWS = ['a', 'e', 'y', 'u', 'i', 'o', 'æ', 'a', 'e', 'y', 'u', 'i', 'o', 'æ']
+CONS = [#qghʧθ'z'cvf,'ň'j
+'z','w','s','kh','d','r',
+   't','b','n',
+   'm','k','l','p','ð' 
 ]
 
 #to increase the "depth of choice" there are more than 2 same entities here
@@ -13,14 +15,14 @@ res = []
 
 #
 
-def set_random_len():
+'''def set_random_len():
     
     l_min = random.choice(range(2))
-    l_max = random.choice(range(2,5))
+    l_max = random.choice(range(2,4))
 
     m_len = ((l_max - l_min) + 1) 
     return m_len
-
+'''
 
 def generate_morph():
     
@@ -49,6 +51,8 @@ def multiply(index):
     index = index
     while index != 0:
         generate_morph()
+        random.shuffle(VOWS)
+        random.shuffle(CONS)
         index -= 1
     print(res)
 

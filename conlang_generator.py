@@ -15,6 +15,12 @@ PCONS = ['q','w','s','kh','r',
    'l','p'
 ]
 
+#to increase the "depth of choice" there are more than 2 same entities here
+TYPES = ['v','c','v','c','v','c','v','c','v','c','v','c','v','c']
+
+
+morph_res = []
+
 
 class Morpheme:
     '''This class creates a morpheme.
@@ -24,47 +30,64 @@ class Morpheme:
         -maximum size (3 by defaut)
         -2 types of grapheme: vowel | consonant 
     '''
-
-
-    def __init__(self, min_size:int=2, max_size:int=3, passed=False):
-        self.min_size = min_size
-        self.max_size = max_size
-        self.passed = passed
-        self.morph_output = []
-
-
     
-    def generate_morph(self, counter):
-        '''counter = number of needed morphems * 5
-        '''
-        self.counter = counter
-        while self.counter > 1:
-            s = ''
-            for i in self.passed:
+     
 
-                if i == 'c':
-                    c = random.choice(MCONS)
-                    s += c
-                else:
-                    v = random.choice(MVOWS)
-                    s += v
-            self.counter -= 1
-            self.morph_output.append(s)
 
+    def set_random_len(self):
+        self.l_min = random.choice(range(2))
+        self.l_max = random.choice(range(2,4))
+
+        self.m_len = ((self.l_max - self.l_min) + 1) 
+        return self.m_len
+        
+
+    def generate_morph(self):
+    
+        self.generated_type = ''
+        self.generated_morph = '' 
+        
+        self._len = self.set_random_len()
+            
+        for i in range(self._len):
+            self.graphem_type = random.choice(TYPES)
+            self.generated_type += self.graphem_type
+
+        for i in self.generated_type:
+            if i == 'v':
+                self.v_choosen = random.choice(MVOWS)
+                self.generated_morph += self.v_choosen
+            elif i == 'c':
+                self.c_choosen = random.choice(MCONS)
+                self.generated_morph += self.c_choosen
+
+        morph_res.append(self.generated_morph)
+
+
+    def morph_multiply(self, index):
+        self.index = index
+        while self.index != 0:
+            self.generate_morph()
+            random.shuffle(MVOWS)
+            random.shuffle(MCONS)
+            self.index -= 1
 
 
     def return_morph_output(self):
-        return self.morph_output
+        return morph_res
 
 
 
     def show_morph_output(self):
-        print(self.morph_output)   
+        print(morph_res)   
 
 
-m = Morpheme(2, 4, 'cvccv')
-m.generate_morph(10)
-m.show_morph_output() 
+m = Morpheme()
+m.morph_multiply(20)
+m.show_morph_output()
+#m.generate_morph()
+
+#m.show_morph_output() 
 
 #o@pc:~/python/conlang$ python3 conlang_generator.py
 #['θugzā', 'zyðza', 'zubfo', 'baqðe', 'ňermu', 'datqe', 'līfňa', 'pyθhā', 'tuckha']
@@ -122,17 +145,20 @@ class Prefix(Morpheme):
 
 
 
-p = Prefix(1,2,'cv')
-p.set_pref_output()
-p.generate_pref(10)
-p.show_pref_output()
+#p = Prefix(1,2,'vv')
+#p.set_pref_output()
+#p.generate_pref(5)
+#p.show_pref_output()
 
 
 #https://www.geeksforgeeks.org/python-concatenate-two-lists-element-wise/
-res = [i + j for i, j in zip(p.pref_output, m.morph_output)]
+#res = [i + j for i, j in zip(p.pref_output, m.morph_output)]
+#for i,j in zip(p.pref_output, m.morph_output): 
+#    print(i,j)
 
 
-print(res)
+
+
 
 #['syvðæ', 'lāzræ', 'wībma', 'ʧīcra', 'zāvða', 'highī', 'vīnza', 'θivmī', 'lījfa']
 #['le-', 'wi-', 'qæ-', 'fi-', 'ti-', 'væ-', 'to-', 'gi-', 'be-']

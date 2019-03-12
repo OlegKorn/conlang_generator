@@ -169,11 +169,12 @@ class Noun:
     '''Contacenates a noun from Prefix, Root, Suffix classes output
     '''
 
-    def __init__(self, nouns_amount=10):
+    def __init__(self, nouns_amount:int=10):
         self.nouns_amount = nouns_amount
 
-    def contacenate_noun(self):
-        
+    def contacenate_noun(self, nouns_amount):
+        self.nouns_amount = nouns_amount
+
         p = Prefix()
         p.generate_pref(self.nouns_amount)
 
@@ -183,13 +184,20 @@ class Noun:
         s = Suffix()
         s.generate_suff(self.nouns_amount)
 
-        self.nouns = []
+        self.word = '' 
+        self.nouns = ['NOUNS: ']
 
         for x,y,z in zip(p.prefs, r.roots, s.suffs):
-            print(x,y,z) 
+            self.word += x
+            self.word += y
+            self.word += z
+
+            self.nouns.append(self.word.replace('-', '')) 
+            self.word = ''
+        print(self.nouns)
 
 
 n = Noun()
-n.contacenate_noun()
+n.contacenate_noun(20)
 
 

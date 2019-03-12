@@ -121,7 +121,7 @@ class Suffix:
         #a number of suff-s to be generated
         self.suffs_quantity = int(suffs_quantity)
 
-        self.SUFF_TYPES = ['cvc', 'vvc', 'cv', 'vc']
+        self.SUFF_TYPES = ['vc']
 
         #graphems to generate roots from
         self.SVOWS = ['a','æ','ā']
@@ -140,9 +140,9 @@ class Suffix:
             
             for i in _type:
                 if i == 'c': 
-                    self.suff += random.choice(self.SVOWS)
-                if i == 'v':
                     self.suff += random.choice(self.SCONS)
+                if i == 'v':
+                    self.suff += random.choice(self.SVOWS)
             
             self.suffs.append(self.suff)
                 

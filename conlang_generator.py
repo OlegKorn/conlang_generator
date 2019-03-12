@@ -13,7 +13,7 @@ Conlang ver 1.1
 class Root:
 
     '''
-    Generates a root of сertain type by random choice from ROOTS 
+    Generates a list of roots of сertain type by random choice from ROOTS 
     made of RWOVS and RCONS graphemes 
     '''
     
@@ -65,11 +65,55 @@ class Root:
 
 
 r = Root()
-r.generate_root(50)
-#['æcʧy', 'tupdi', 'if', 'odθ', 'fbīð', 'avuʧ', 'ňæθæ', 'īyq', 'hðæ', 'mi', 'æhtā', 
-#'ʧopθe', 'āθ', 'avz', 'gpoq', 'ymaʧ', 'maja', 'oæl', 'ʧbu', 'vu', 'akhpa', 'pazgī', 
-#'az', 'ocj', 'wjæn', 'iʧab', 'qīʧy', 'aīn', 'fðī', 'dy', 'ykhfæ', 'capfe', 'od', 
-#'āpl', 'qθap', 'akhīm', 'fīze', 'āān', 'hwe', 'fe', 'aňna', 'qozzy', 'æd', 'ājc', 
-#'mkhoθ', 'īʧār', 'ciqu', 'iif', 'sňe', 'θo']
-
+r.generate_root(33)
 r.show_roots()
+
+
+
+class Prefix:
+    '''
+    Generates a list of prefixes of сertain type by random choice from PREFS 
+    made of PWOVS and PCONS graphemes 
+    '''
+    
+    def generate_pref(self, prefs_quantity):
+        
+        #a number of prefs to be generated
+        self.prefs_quantity = int(prefs_quantity)
+
+        self.PREF_TYPES = ['vc', 'cv']
+
+        #graphems to generate roots from
+        self.PVOWS = ['a','o']
+        self.PCONS = ['r','v','rr','m','ð']
+        self.pref = ''
+        self.prefs = []
+
+        #generate a root according to the scheme set in ROOT_TYPES
+        while self.prefs_quantity != 0:
+    
+            for _type in self.PREF_TYPES:
+            
+                for i in _type:
+                    if i == 'c':
+                        self.pref += random.choice(self.PVOWS)
+                    if i == 'v':
+                        self.pref += random.choice(self.PCONS)
+                self.pref += '-'
+
+                self.prefs.append(self.pref)
+                
+                #null the generated root after appending it to the [self.roots] 
+                self.pref = ''
+
+                self.prefs_quantity -= 1
+
+        return self.prefs
+
+    
+    def show_prefs(self):
+        print(self.prefs)
+    
+#p = Prefix()
+#p.generate_pref(50)
+#p.show_prefs()

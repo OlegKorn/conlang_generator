@@ -1,6 +1,7 @@
 #-*- coding: utf-8 -*- 
 import random
-import string    
+import string 
+from conlang_data import *   
 
 
 '''
@@ -8,196 +9,134 @@ import string
 '''
 
 
-class Prefix:
+
+
+
+class Noun:
     '''
-    Generates a list of prefixes of сertain type by random choice from PREFS 
-    made of PWOVS and PCONS graphemes 
+    Generates a noun by contacenating: (prefix+root+suffix)
     '''
+    def __init__(self, amount:int=1):
+        self.amount = amount
+
     
-    def generate_pref(self, prefs_quantity=1):
-        
-        #a number of prefs to be generated
-        self.prefs_quantity = int(prefs_quantity)
-
-        self.PREF_TYPES = ['vc', 'cv']
-
-        #graphems to generate roots from
-        self.PVOWS = ['a','o']
-        self.PCONS = ['r','v','rr','m','ð']
+    def generate_pref(self):
+        '''
+        This method generates prefixes
+        '''
+        pref_amount = self.amount
         self.pref = ''
         self.prefs = []
-
-        #generate a root according to the scheme set in ROOT_TYPES
-        while self.prefs_quantity != 0:
-    
-            for _type in self.PREF_TYPES:
-            
+ 
+        #generate a prefix according to the scheme set in data.PREF_TYPES
+        while pref_amount != 0:
+            for _type in PREF_TYPES:
                 for i in _type:
                     if i == 'c':
-                        self.pref += random.choice(self.PVOWS)
+                        self.pref += random.choice(PVOWS)
                     if i == 'v':
-                        self.pref += random.choice(self.PCONS)
+                        self.pref += random.choice(PCONS)
                 self.pref += '-'
-
                 self.prefs.append(self.pref)
                 
-                #null the generated root after appending it to the [self.roots] 
+                #null the generated pref after appending it to the [self.prefs] 
                 self.pref = ''
 
-                self.prefs_quantity -= 1
+                pref_amount -= 1
+                
+                random.shuffle(ROOT_TYPES)
+                random.shuffle(RVOWS)
+                random.shuffle(RCONS)
 
         return self.prefs
 
-    def show_prefs(self):
-        print(self.prefs)
+    
 
-
-class Root:
-    '''
-    Generates a list of roots of сertain type by random choice from ROOTS 
-    made of RWOVS and RCONS graphemes 
-    '''
-   
-    def generate_root(self, roots_quantity=1):
-        
-        #a number of roots to be generated
-        self.roots_quantity = int(roots_quantity)
-
-        self.ROOT_TYPES = [
-            'cvvc', 'vcvvc', 'cv', 'cvv', 'vvcv', 
-            'cvcv', 'vcvc', 'ccv', 'vvc', 'vc'
-        ]
-
-        #graphems to generate roots from
-        self.RVOWS = ['a','e','y','u','i','o', 'æ', 'ā', 'ī']
-
-        self.RCONS = [
-            's','k','d','rr','n', 
-            'g','t','f','rr','b','n',
-            'm','k','rr','l','p','ð' 
-        ]
-
+    def generate_root(self):
+        '''
+        This method generates roots
+        '''
+        root_amount = self.amount
         self.root = ''
         self.roots = []
 
-
-        #generate a root according to the scheme set in ROOT_TYPES
-        while self.roots_quantity != 0:
-    
-            _type = random.choice(self.ROOT_TYPES)
-            
+        #generate a root according to the scheme set in conlang_data.ROOT_TYPES
+        while root_amount != 0:
+            _type = random.choice(ROOT_TYPES)
             for i in _type:
                 if i == 'c': 
-                    self.root += random.choice(self.RVOWS)
+                    self.root += random.choice(RVOWS)
                 if i == 'v':
-                    self.root += random.choice(self.RCONS)
+                    self.root += random.choice(RCONS)
             self.roots.append(self.root)
                 
             #null the generated root after appending it to the [self.roots] 
             self.root = ''
 
-            self.roots_quantity -= 1
-            random.shuffle(self.ROOT_TYPES)
-            random.shuffle(self.RVOWS)
-            random.shuffle(self.RCONS)
+            root_amount -= 1
+
+            random.shuffle(ROOT_TYPES)
+            random.shuffle(RVOWS)
+            random.shuffle(RCONS)
 
         return self.roots
 
-    
-    def show_roots(self):
-        print(self.roots)
-            
-
-
-
-class Suffix:
-    '''
-    Generates a list of suffixes of сertain type by random choice from SUFFS 
-    made of SWOVS and SCONS graphemes 
-    '''
-   
-    def generate_suff(self, suffs_quantity=1):
         
-        #a number of suff-s to be generated
-        self.suffs_quantity = int(suffs_quantity)
 
-        self.SUFF_TYPES = ['vc']
-
-        #graphems to generate roots from
-        self.SVOWS = ['a','æ','ā']
-
-        self.SCONS = ['ss','p','ð']
-
+    def generate_suff(self, suffs_quantity=1):
+        '''
+        This method generates roots
+        '''
+        suff_amount = self.amount
         self.suff = ''
         self.suffs = []
 
-
         #generate a root according to the scheme set in ROOT_TYPES
-        while self.suffs_quantity != 0:
-    
-            _type = random.choice(self.SUFF_TYPES)
+        while suff_amount != 0:
+        
+            _type = random.choice(SUFF_TYPES)
             self.suff += '-'
-            
             for i in _type:
                 if i == 'c': 
-                    self.suff += random.choice(self.SCONS)
+                    self.suff += random.choice(SCONS)
                 if i == 'v':
-                    self.suff += random.choice(self.SVOWS)
-            
+                    self.suff += random.choice(SVOWS)
             self.suffs.append(self.suff)
-                
+                 
             #null the generated root after appending it to the [self.roots] 
             self.suff = ''
-            self.suffs_quantity -= 1
+            suff_amount -= 1
 
-            random.shuffle(self.SUFF_TYPES)
-            random.shuffle(self.SVOWS)
-            random.shuffle(self.SCONS)
+            random.shuffle(SUFF_TYPES)
+            random.shuffle(SVOWS)
+            random.shuffle(SCONS)
 
         return self.suffs
 
     
-    def show_suffs(self):
-        print(self.suffs)
 
-#s = Suffix()
-#s.generate_suff(20)
-#s.show_suffs()
-
-
-class Noun:
-    '''Contacenates a noun from Prefix, Root, Suffix classes output
-    '''
-
-    def __init__(self, nouns_amount:int=10):
-        self.nouns_amount = nouns_amount
-
-    def contacenate_noun(self, nouns_amount):
-        self.nouns_amount = nouns_amount
-
-        p = Prefix()
-        p.generate_pref(self.nouns_amount)
-
-        r = Root()
-        r.generate_root(self.nouns_amount)
-
-        s = Suffix()
-        s.generate_suff(self.nouns_amount)
-
+    def contacenate_noun(self):
+        '''
+        This method contacenates
+        '''
         self.word = '' 
         self.nouns = ['NOUNS: ']
 
-        for x,y,z in zip(p.prefs, r.roots, s.suffs):
+        for x,y,z in zip(self.prefs, self.roots, self.suffs):
             self.word += x
             self.word += y
             self.word += z
+            self.word += 'r'
 
             self.nouns.append(self.word.replace('-', '')) 
             self.word = ''
         print(self.nouns)
+            
+       
 
 
-n = Noun()
-n.contacenate_noun(20)
-
-
+n = Noun(20)
+n.generate_pref()
+n.generate_root()
+n.generate_suff()
+n.contacenate_noun()

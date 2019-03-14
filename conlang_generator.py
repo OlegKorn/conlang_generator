@@ -22,20 +22,17 @@ pref_null = ''
 root_null = ''
 suff_null = ''
 
-number = 0
 
 class Amount:
     def __init__(self, amount:int):
         self.amount = amount
-        number = self.amount
-
+        
 
 class Prefix:
-    def __init__(self, amount:int):
-        self.amount = amount
+    def __init__(self):
+        self.amount = a.amount
 
     def generate_pref(self):
-         
         '''
         This method generates prefixes
         '''
@@ -73,8 +70,8 @@ class Root:
     '''
     Generates a stem by contacenating: ([prefix]+root+[suffix])
     '''
-    def __init__(self, amount:int):
-        self.amount = amount
+    def __init__(self):
+        self.amount = a.amount
 
     def generate_root(self): 
         '''
@@ -107,8 +104,8 @@ class Root:
 
 class Suffix:
 
-    def __init__(self, amount:int):
-        self.amount = amount
+    def __init__(self):
+        self.amount = a.amount
 
     def generate_suff(self):
         '''
@@ -144,7 +141,6 @@ class Noun:
 
     def contacenate_noun(self):
 
-        self.amount = amount 
         self.noun = ''
 
         for x,y,z in zip(prefixes[1:], roots[1:], suffixes[1:]):
@@ -167,7 +163,7 @@ class Noun:
 class Verb:
 
     def contacenate_verb(self):
-        self.amount = amount 
+
         self.verb = ''
         
         for x,y,z in zip(prefixes[1:], roots[1:], suffixes[1:]):
@@ -192,7 +188,7 @@ class Verb:
 class Adjective:
 
     def contacenate_adjective(self):
-        self.amount = amount        
+
         self.adjective = ''
 
         for x,y,z in zip(prefixes[1:], roots[1:], suffixes[1:]):
@@ -214,14 +210,20 @@ class Adjective:
         print(adjectives) 
 
 
-    
-p = Prefix(10)
+
+a = Amount(40)  #задаем количество сущностей для генерации
+print(a.amount)
+
+
+
+p = Prefix()
+print(p.amount)
 p.generate_pref()
 
-r = Root(10)
+r = Root()
 r.generate_root()
 
-s = Suffix(10)
+s = Suffix()
 s.generate_suff()
 
 n = Noun()
@@ -233,26 +235,13 @@ v.contacenate_verb()
 a = Adjective()
 a.contacenate_adjective()
 
+#PREFFIXES: ['-', 'ov-', '-', '-', '-']
+#ROOTS: ['rru', 'æsin', 'uð', 'lðī', 'pīby']
+#SUFFIXES: ['-æp', '-æss', '-', '-', '-']
+#['NOUNS:', 'ov-æsin-æss', '-uð-', '-lðī-', '-pīby-']
+#['VERBS:', 'ov-rru-æp-en', '-pīby--en', '-æsin--en', '-uð-æss-en']
+#['ADJECTIVES:', 'ov-æsin--ive', '-uð--ing', '-rru--able', '-pīby-æss-able']
 
-#['NOUNS: ', 'am-mpo-ass', 'rra-barrmy-ass', 'að-nefge-ass', 'ra-ym-æp', 'ov-bæ-āss', 'vo-iyrr-að', 'orr-adāð-æss', 'ða-ufp-āp', 'ov-pæ-að']
-#['VERBS: ', 'að-iyrr-ass-ed', 'am-pæ-æss-i', 'orr-tkā-að-em', 'ov-mpo-æp-ed', 'rro-barrmy-āp-i', 'ra-ym-að-am', 'ða-ufp-ass-i', 'rra-nefge-āss-and', 'vo-adāð-ass-am']
 
 
-
-'''def contacenate_noun(self):
-        
-        This method contacenates
-        
-        self.word = '' 
-        self.nouns = ['NOUNS: ']
-
-        for x,y,z in zip(self.prefs, self.roots, self.suffs):
-            self.word += x
-            self.word += y
-            self.word += z
-            self.word += 'r'
-
-            self.nouns.append(self.word.replace('-', '')) 
-            self.word = ''
-        print(self.nouns)'''
             

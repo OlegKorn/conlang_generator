@@ -13,15 +13,10 @@ prefixes = []
 roots = []
 suffixes = []
 
-verbs = []
 nouns = []
+verbs = []
 adjectives = []
 
-pref_null = ''
-root_null = ''
-suff_null = ''
-
-sent = ''
 
 class Amount:
     def __init__(self, amount:int):
@@ -60,8 +55,6 @@ class Prefix:
             self.amount -= 1
 
 
-
-
 class Root:
     '''
     Generates a stem by contacenating: ([prefix]+root+[suffix])
@@ -93,8 +86,6 @@ class Root:
             random.shuffle(ROOT_TYPES)
             random.shuffle(RVOWS)
             random.shuffle(RCONS)
-       
-
 
 
 class Suffix:
@@ -164,12 +155,11 @@ class Verb:
             self.verb += x
             self.verb += y
             self.verb += z
-            self.verb += VERB_INFIN_MARKER
+            self.verb += INF_MARKER
 
             random.shuffle(prefixes)
             random.shuffle(roots)
             random.shuffle(suffixes)
-            random.shuffle(VERB_CONJ_MARKERS)
             
             verbs.append(self.verb) 
             self.verb = ''
@@ -201,34 +191,49 @@ class Adjective:
             self.adjective = ''
         
         adjectives.insert(0, 'ADJECTIVES: ')
-        print(adjectives) 
-
-
 
 
 
 class Sentence:
-    def __init__(self, sentence_length:int=False):
-        self.sentence_length = sentence_length
+    def __init__(self):
+        self.amount = a.amount
         self.sentence = []
+        self.s_verb = ''
 
     def create(self):
-        
-        #define combinations of entities
-        #verbs = []
-        #nouns = []
-        #adjectives = []
 
-        # noun + verb
-        noun_verb = random.choice(nouns) + ' ' + random.choice(verbs)
-        print(f' V+N: {noun_verb}')
+        while self.amount != 0:
+
+            #set a randomly choosen punctuation sign
+            punct_sign = random.choice(PUNCTUATION)
+
+            #set a randomly choosen preposition
+            preposition = random.choice(PREPOS)
+
+            #set a randomly choosen pronoun and 
+            #a conjugation ending corresponding to it
+            pronoun, conj = random.choice(list(PRON_CONJ.items())) # "il -a" etc.
+
+            for i in verbs:
+                self.s_verb = i + conj.replace('-', '') 
+ 
+            random.shuffle(PUNCTUATION)
+            random.shuffle(PREPOS)
+
+            print(pronoun, self.s_verb, preposition, punct_sign)
+
+            self.amount -= 1
+
+
+
+
+
 
 
 #for key, value in PRONOUNS.items():
 #    print(key, value)
 
-a = Amount(105)  #задаем количество сущностей для генерации
-print(a.amount)
+a = Amount(40)  #задаем количество сущностей для генерации
 
 
 p = Prefix()
@@ -246,9 +251,18 @@ n.contacenate_noun()
 v = Verb()
 v.contacenate_verb()
 
-a = Adjective()
-a.contacenate_adjective()
+ad = Adjective()
+ad.contacenate_adjective()
 
-se = Sentence()
-se.create()  # N+V: aðāsopāp ðoknumassen
-     
+
+se = Sentence() #a first step to generate a number of sentences. the number is storaged in Amount.amount 
+se.create()
+#tu orrtānaeni among ?
+#tu orrtānaeni of -
+#io orrtānaeno upon ;
+#voi orrtānaenete in !?
+#Lei orrtānaena on -
+#il orrtānaena with ;
+#noi orrtānaenamo of ?
+#tu orrtānaeni on ?
+#loro orrtānaenanno at ...

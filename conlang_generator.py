@@ -1,3 +1,5 @@
+
+
 #-*- coding: utf-8 -*- 
 import random
 import string 
@@ -8,91 +10,114 @@ from conlang_data import *
  A VERY SIMPLE conlang ver. 1.2
 '''
 
+prefixes = []
+roots = []
+suffixes = []
+
+verbs = []
+nouns = []
+adjectives = []
+
+pref_null = ''
+root_null = ''
+suff_null = ''
+
+number = 0
+
+class Amount:
+    def __init__(self, amount:int):
+        self.amount = amount
+        number = self.amount
 
 
-
-
-class Noun:
-    '''
-    Generates a noun by contacenating: (prefix+root+suffix)
-    '''
-    def __init__(self, amount:int=1):
+class Prefix:
+    def __init__(self, amount:int):
         self.amount = amount
 
-    
     def generate_pref(self):
+         
         '''
         This method generates prefixes
         '''
-        pref_amount = self.amount
+        #pref_amount = self.amount 
         self.pref = ''
-        self.prefs = []
  
         #generate a prefix according to the scheme set in data.PREF_TYPES
-        while pref_amount != 0:
-            for _type in PREF_TYPES:
-                for i in _type:
-                    if i == 'c':
-                        self.pref += random.choice(PVOWS)
-                    if i == 'v':
-                        self.pref += random.choice(PCONS)
-                self.pref += '-'
-                self.prefs.append(self.pref)
+        while self.amount != 0:
+            _type = random.choice(PREF_TYPES)
+            for i in _type:
                 
-                #null the generated pref after appending it to the [self.prefs] 
-                self.pref = ''
-
-                pref_amount -= 1
+                if i == 'c':
+                    self.pref += random.choice(PCONS)
                 
-                random.shuffle(ROOT_TYPES)
-                random.shuffle(RVOWS)
-                random.shuffle(RCONS)
+                if i == 'v':
+                    self.pref += random.choice(PVOWS)
+            
+            self.pref += '-'
+                
+            prefixes.append(self.pref)
+                    
+            #null the generated pref after appending it to the [self.prefs] 
+            self.pref = ''
+                        
+            random.shuffle(PCONS)
+            random.shuffle(PVOWS)
+            self.amount -= 1
 
-        return self.prefs
+            
+        print(prefixes)
 
-    
 
-    def generate_root(self):
+
+class Root:
+    '''
+    Generates a stem by contacenating: ([prefix]+root+[suffix])
+    '''
+    def __init__(self, amount:int):
+        self.amount = amount
+
+    def generate_root(self): 
         '''
         This method generates roots
         '''
-        root_amount = self.amount
         self.root = ''
-        self.roots = []
 
         #generate a root according to the scheme set in conlang_data.ROOT_TYPES
-        while root_amount != 0:
+        while self.amount != 0:
             _type = random.choice(ROOT_TYPES)
             for i in _type:
                 if i == 'c': 
                     self.root += random.choice(RVOWS)
                 if i == 'v':
                     self.root += random.choice(RCONS)
-            self.roots.append(self.root)
+            roots.append(self.root)
                 
             #null the generated root after appending it to the [self.roots] 
             self.root = ''
 
-            root_amount -= 1
+            self.amount -= 1
 
             random.shuffle(ROOT_TYPES)
             random.shuffle(RVOWS)
             random.shuffle(RCONS)
+       
+        print(roots)
 
-        return self.roots
 
-        
 
-    def generate_suff(self, suffs_quantity=1):
+class Suffix:
+
+    def __init__(self, amount:int):
+        self.amount = amount
+
+    def generate_suff(self):
         '''
         This method generates roots
         '''
-        suff_amount = self.amount
         self.suff = ''
-        self.suffs = []
 
         #generate a root according to the scheme set in ROOT_TYPES
-        while suff_amount != 0:
+        while self.amount != 0:
         
             _type = random.choice(SUFF_TYPES)
             self.suff += '-'
@@ -101,24 +126,123 @@ class Noun:
                     self.suff += random.choice(SCONS)
                 if i == 'v':
                     self.suff += random.choice(SVOWS)
-            self.suffs.append(self.suff)
+            suffixes.append(self.suff)
                  
             #null the generated root after appending it to the [self.roots] 
             self.suff = ''
-            suff_amount -= 1
+            
+            self.amount -= 1
 
             random.shuffle(SUFF_TYPES)
             random.shuffle(SVOWS)
             random.shuffle(SCONS)
 
-        return self.suffs
+        print(suffixes)
 
-    
+
+class Noun: 
 
     def contacenate_noun(self):
-        '''
+
+        self.amount = amount 
+        self.noun = ''
+
+        for x,y,z in zip(prefixes[1:], roots[1:], suffixes[1:]):
+            self.noun += x
+            self.noun += y
+            self.noun += z
+
+            random.shuffle(prefixes)
+            random.shuffle(roots)
+            random.shuffle(suffixes)
+            
+            nouns.append(self.noun) 
+            self.noun = ''
+
+        nouns.insert(0, 'NOUNS:')
+        print(nouns)
+
+
+
+class Verb:
+
+    def contacenate_verb(self):
+        self.amount = amount 
+        self.verb = ''
+        
+        for x,y,z in zip(prefixes[1:], roots[1:], suffixes[1:]):
+            self.verb += x
+            self.verb += y
+            self.verb += z
+            self.verb += VERB_INFIN_MARKER
+
+            random.shuffle(prefixes)
+            random.shuffle(roots)
+            random.shuffle(suffixes)
+            random.shuffle(VERB_CONJ_MARKERS)
+            
+            verbs.append(self.verb) 
+            self.verb = ''
+
+        verbs.insert(0, 'VERBS:')
+        print(verbs)
+
+
+
+class Adjective:
+
+    def contacenate_adjective(self):
+        self.amount = amount        
+        self.adjective = ''
+
+        for x,y,z in zip(prefixes[1:], roots[1:], suffixes[1:]):
+            ending = random.choice(ADJ_ENDINGS)
+            self.adjective += x
+            self.adjective += y
+            self.adjective += z
+            self.adjective += ending
+
+            random.shuffle(prefixes)
+            random.shuffle(roots)
+            random.shuffle(suffixes)
+            random.shuffle(ADJ_ENDINGS)
+            
+            adjectives.append(self.adjective) 
+            self.adjective = ''
+        
+        adjectives.insert(0, 'ADJECTIVES:')
+        print(adjectives) 
+
+
+    
+p = Prefix(10)
+p.generate_pref()
+
+r = Root(10)
+r.generate_root()
+
+s = Suffix(10)
+s.generate_suff()
+
+n = Noun()
+n.contacenate_noun()
+
+v = Verb()
+v.contacenate_verb()
+
+a = Adjective()
+a.contacenate_adjective()
+
+
+#['NOUNS: ', 'am-mpo-ass', 'rra-barrmy-ass', 'að-nefge-ass', 'ra-ym-æp', 'ov-bæ-āss', 'vo-iyrr-að', 'orr-adāð-æss', 'ða-ufp-āp', 'ov-pæ-að']
+#['VERBS: ', 'að-iyrr-ass-ed', 'am-pæ-æss-i', 'orr-tkā-að-em', 'ov-mpo-æp-ed', 'rro-barrmy-āp-i', 'ra-ym-að-am', 'ða-ufp-ass-i', 'rra-nefge-āss-and', 'vo-adāð-ass-am']
+
+
+
+'''def contacenate_noun(self):
+        
         This method contacenates
-        '''
+        
         self.word = '' 
         self.nouns = ['NOUNS: ']
 
@@ -130,13 +254,5 @@ class Noun:
 
             self.nouns.append(self.word.replace('-', '')) 
             self.word = ''
-        print(self.nouns)
+        print(self.nouns)'''
             
-       
-
-
-n = Noun(20)
-n.generate_pref()
-n.generate_root()
-n.generate_suff()
-n.contacenate_noun()

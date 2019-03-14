@@ -14,7 +14,8 @@ roots = []
 suffixes = []
 
 nouns = []
-verbs = []
+verb_morphemes = []
+infinitives = []
 adjectives = []
 
 
@@ -147,25 +148,41 @@ class Noun:
 
 class Verb:
 
-    def contacenate_verb(self):
+    def create_infinitive(self):
 
-        self.verb = ''
+        self.inf = ''
         
         for x,y,z in zip(prefixes[1:], roots[1:], suffixes[1:]):
-            self.verb += x
-            self.verb += y
-            self.verb += z
-            self.verb += INF_MARKER
+            self.inf += x
+            self.inf += y
+            self.inf += z
+            self.inf += INF_MARKER
 
             random.shuffle(prefixes)
             random.shuffle(roots)
             random.shuffle(suffixes)
             
-            verbs.append(self.verb) 
-            self.verb = ''
+            infinitives.append(self.inf) 
+            self.inf = ''
 
-        verbs.insert(0, 'VERBS: ')
-        #print(verbs)
+
+    def create_verb_morpheme(self):
+
+        self.v_morpheme = ''
+        
+        for x,y,z in zip(prefixes[1:], roots[1:], suffixes[1:]):
+            self.v_morpheme += x
+            self.v_morpheme += y
+            self.v_morpheme += z
+
+            random.shuffle(prefixes)
+            random.shuffle(roots)
+            random.shuffle(suffixes)
+            
+            verb_morphemes.append(self.v_morpheme) 
+            self.v_morpheme = ''
+
+
 
 
 
@@ -199,7 +216,19 @@ class Sentence:
         self.amount = a.amount
         self.sentence = []
         self.s_verb = ''
+    
+    SENT_TYPES = ['declarative', 'question', 'exclamation', 'negative']
 
+    #set schemes of generating of sentences
+    def declarative(self): # noun + verb conjugated + verb infinitive comma
+        pass
+    def question(self):
+        pass
+    def exclamation(self):
+        pass
+    def negative(self):
+        pass
+    
     def create(self):
 
         while self.amount != 0:
@@ -233,7 +262,7 @@ class Sentence:
 #for key, value in PRONOUNS.items():
 #    print(key, value)
 
-a = Amount(40)  #задаем количество сущностей для генерации
+a = Amount(10)  #задаем количество сущностей для генерации
 
 
 p = Prefix()
@@ -249,20 +278,12 @@ n = Noun()
 n.contacenate_noun()
 
 v = Verb()
-v.contacenate_verb()
+v.create_infinitive()
+v.create_verb_morpheme()
 
 ad = Adjective()
 ad.contacenate_adjective()
 
 
-se = Sentence() #a first step to generate a number of sentences. the number is storaged in Amount.amount 
-se.create()
-#tu orrtānaeni among ?
-#tu orrtānaeni of -
-#io orrtānaeno upon ;
-#voi orrtānaenete in !?
-#Lei orrtānaena on -
-#il orrtānaena with ;
-#noi orrtānaenamo of ?
-#tu orrtānaeni on ?
-#loro orrtānaenanno at ...
+#se = Sentence()
+#se.create()

@@ -18,6 +18,7 @@ verb_morphemes = []
 infinitives = []
 adjectives = []
 
+sentences = []
 
 class Amount:
     def __init__(self, amount:int):
@@ -214,8 +215,7 @@ class Adjective:
 class Sentence:
     def __init__(self):
         self.amount = a.amount
-        self.sentence = []
-        self.string = ''
+        self.sent = ''
 
     #nouns = []
     #verb_morphemes = []
@@ -226,30 +226,88 @@ class Sentence:
 
     #set schemes of generating of sentences
     def declarative(self): # pronoun + verb conjugated + verb infinitive comma
-        while self.amount != 0:
+        self.d_num = self.amount
+
+        sentences.append('DECLARATIVE: ')
+
+        while self.d_num != 0:
 
             self.pronoun, self.v_conj_ending = random.choice(list(PRON_CONJ.items()))
             self.verb_conjugated = str(random.choice(verb_morphemes)) + self.v_conj_ending.replace('-', '')
             self.verb_infinitive = str(random.choice(infinitives))
 
-            self.string = self.pronoun + ' ' + self.verb_conjugated + ' ' +  self.verb_infinitive + '.'
+            self.sent = self.pronoun + ' ' + self.verb_conjugated + ' ' +  self.verb_infinitive + '.'
 
-            self.sentence.append(self.string)
+            sentences.append(self.sent)
 
-            self.string = '' 
+            self.sent = '' 
 
-            self.amount -= 1
-
-        print(self.sentence)
+            self.d_num -= 1
 
 
 
-    def question(self):
-        pass
-    def exclamation(self):
-        pass
-    def negative(self):
-        pass
+    def question(self):  # verb conjugated + pronoun + a + verb infinitive + ?
+        self.q_num = self.amount
+
+        sentences.append('QUESTION: ')
+
+        while self.q_num != 0:
+
+            self.pronoun, self.v_conj_ending = random.choice(list(PRON_CONJ.items()))
+            self.verb_conjugated = str(random.choice(verb_morphemes)) + self.v_conj_ending.replace('-', '')
+            self.verb_infinitive = str(random.choice(infinitives))
+
+            self.sent = self.verb_conjugated + ' ' + self.pronoun + ' a ' + self.verb_infinitive + '?'
+
+            sentences.append(self.sent)
+
+            self.sent = '' 
+
+            self.q_num -= 1
+
+
+   
+    def exclamation(self):  # pronoun + verb conjugated + verb infinitivew + !
+        self.e_num = self.amount
+
+        sentences.append('EXCLAMATION: ')
+
+        while self.e_num != 0:
+
+            self.pronoun, self.v_conj_ending = random.choice(list(PRON_CONJ.items()))
+            self.verb_conjugated = str(random.choice(verb_morphemes)) + self.v_conj_ending.replace('-', '')
+            self.verb_infinitive = str(random.choice(infinitives))
+
+            self.sent = self.pronoun  + ' ' + self.verb_conjugated + ' ' + self.verb_infinitive + '!'
+
+            sentences.append(self.sent)
+
+            self.sent = '' 
+
+            self.e_num -= 1
+
+
+    
+    def negative(self):  # pronoun + non + verb conjugated + a + verb infinitive
+        self.n_num = self.amount
+        
+        sentences.append('NEGATIVE: ')
+
+        while self.n_num != 0:
+
+            self.pronoun, self.v_conj_ending = random.choice(list(PRON_CONJ.items()))
+            self.verb_conjugated = str(random.choice(verb_morphemes)) + self.v_conj_ending.replace('-', '')
+            self.verb_infinitive = str(random.choice(infinitives))
+
+            self.sent = self.pronoun  + NEG + self.verb_conjugated + ' a ' + self.verb_infinitive + '.'
+
+            sentences.append(self.sent)
+
+            self.sent = '' 
+
+            self.n_num -= 1
+
+        print(sentences)
 
 
 
@@ -261,7 +319,7 @@ class Sentence:
 #for key, value in PRONOUNS.items():
 #    print(key, value)
 
-a = Amount(10)  #задаем количество сущностей для генерации
+a = Amount(5)  #задаем количество сущностей для генерации
 
 
 p = Prefix()
@@ -286,8 +344,16 @@ ad.contacenate_adjective()
 
 
 se = Sentence()
-#se.create()
 se.declarative()
-#['noi asmāssamo orrrrkeāssen.', 'il marrkeassa orraðen.', 'il ātnassa orraðen.', 'tu rræapi orraðen.', 
-#'lei asmāssa rremnīapen.', 'io kupdāo arrrræen.', 'il ātnassa makupdāaðen.', 'voi kupdāete arrrræen.',
-#'loro kupdāanno makupdāaðen.', 'lei asmāssa rremnīapen.', 'voi marrkeassete orrrrkeāssen.']
+se.question()
+se.exclamation()
+se.negative()
+
+
+#['DECLARATIVE: ', 'loro eisanno oreisen.', 'tu orrmærruæpi orrmærruæssen.', 'voi ovakakete akakæpen.', 'io eiso ovamen.', 
+#'il orrmærruæpa oreisen.', 'lei orfærrrria akakæpen.', 'QUESTION: ', 'eisi tu a færrrrien?', 'ovakaka Lei a orrmærruæssen?', 
+#'amo io a akakæpen?', 'orfærrrrio io a oreisen?', 'eisanno loro a akakæpen?', 'orrmærruæpo io a orrmærruæssen?', 
+#'EXCLAMATION: ', 'noi amamo færrrrien!', 'tu orfærrrrii oreisen!', 'io orrmærruæpo orrmærruæssen!', 'io eiso ovamen!', 
+#'io ovakako akakæpen!', 'tu orrmærruæpi orrmærruæssen!', 'NEGATIVE: ', 'voi nun orfærrrriete a oreisen.', 
+#'voi nun orrmærruæpete a færrrrien.', 'noi nun orfærrrriamo a oreisen.', 'Lei nun orfærrrria a orrmærruæssen.', 
+#'voi nun eisete a akakæpen.', 'voi nun orrmærruæpete a orrmærruæssen.']

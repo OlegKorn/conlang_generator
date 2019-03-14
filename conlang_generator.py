@@ -1,5 +1,4 @@
 
-
 #-*- coding: utf-8 -*- 
 import random
 import string 
@@ -22,10 +21,11 @@ pref_null = ''
 root_null = ''
 suff_null = ''
 
+sent = ''
 
 class Amount:
     def __init__(self, amount:int):
-        self.amount = amount
+        self.amount = amount + 1
         
 
 class Prefix:
@@ -50,8 +50,6 @@ class Prefix:
                 if i == 'v':
                     self.pref += random.choice(PVOWS)
             
-            self.pref += '-'
-                
             prefixes.append(self.pref)
                     
             #null the generated pref after appending it to the [self.prefs] 
@@ -61,8 +59,6 @@ class Prefix:
             random.shuffle(PVOWS)
             self.amount -= 1
 
-            
-        print(prefixes)
 
 
 
@@ -98,7 +94,6 @@ class Root:
             random.shuffle(RVOWS)
             random.shuffle(RCONS)
        
-        print(roots)
 
 
 
@@ -117,7 +112,7 @@ class Suffix:
         while self.amount != 0:
         
             _type = random.choice(SUFF_TYPES)
-            self.suff += '-'
+            
             for i in _type:
                 if i == 'c': 
                     self.suff += random.choice(SCONS)
@@ -134,7 +129,6 @@ class Suffix:
             random.shuffle(SVOWS)
             random.shuffle(SCONS)
 
-        print(suffixes)
 
 
 class Noun: 
@@ -155,8 +149,8 @@ class Noun:
             nouns.append(self.noun) 
             self.noun = ''
 
-        nouns.insert(0, 'NOUNS:')
-        print(nouns)
+        nouns.insert(0, 'NOUNS: ')
+        #print(nouns)
 
 
 
@@ -180,8 +174,8 @@ class Verb:
             verbs.append(self.verb) 
             self.verb = ''
 
-        verbs.insert(0, 'VERBS:')
-        print(verbs)
+        verbs.insert(0, 'VERBS: ')
+        #print(verbs)
 
 
 
@@ -206,18 +200,38 @@ class Adjective:
             adjectives.append(self.adjective) 
             self.adjective = ''
         
-        adjectives.insert(0, 'ADJECTIVES:')
+        adjectives.insert(0, 'ADJECTIVES: ')
         print(adjectives) 
 
 
 
-a = Amount(40)  #задаем количество сущностей для генерации
+
+
+class Sentence:
+    def __init__(self, sentence_length:int=False):
+        self.sentence_length = sentence_length
+        self.sentence = []
+
+    def create(self):
+        
+        #define combinations of entities
+        #verbs = []
+        #nouns = []
+        #adjectives = []
+
+        # noun + verb
+        noun_verb = random.choice(nouns) + ' ' + random.choice(verbs)
+        print(f' V+N: {noun_verb}')
+
+
+#for key, value in PRONOUNS.items():
+#    print(key, value)
+
+a = Amount(105)  #задаем количество сущностей для генерации
 print(a.amount)
 
 
-
 p = Prefix()
-print(p.amount)
 p.generate_pref()
 
 r = Root()
@@ -235,13 +249,6 @@ v.contacenate_verb()
 a = Adjective()
 a.contacenate_adjective()
 
-#PREFFIXES: ['-', 'ov-', '-', '-', '-']
-#ROOTS: ['rru', 'æsin', 'uð', 'lðī', 'pīby']
-#SUFFIXES: ['-æp', '-æss', '-', '-', '-']
-#['NOUNS:', 'ov-æsin-æss', '-uð-', '-lðī-', '-pīby-']
-#['VERBS:', 'ov-rru-æp-en', '-pīby--en', '-æsin--en', '-uð-æss-en']
-#['ADJECTIVES:', 'ov-æsin--ive', '-uð--ing', '-rru--able', '-pīby-æss-able']
-
-
-
-            
+se = Sentence()
+se.create()  # N+V: aðāsopāp ðoknumassen
+     

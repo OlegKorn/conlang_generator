@@ -215,43 +215,42 @@ class Sentence:
     def __init__(self):
         self.amount = a.amount
         self.sentence = []
-        self.s_verb = ''
+        self.string = ''
+
+    #nouns = []
+    #verb_morphemes = []
+    #infinitives = []
+    #adjectives = []
     
     SENT_TYPES = ['declarative', 'question', 'exclamation', 'negative']
 
     #set schemes of generating of sentences
-    def declarative(self): # noun + verb conjugated + verb infinitive comma
-        pass
+    def declarative(self): # pronoun + verb conjugated + verb infinitive comma
+        while self.amount != 0:
+
+            self.pronoun, self.v_conj_ending = random.choice(list(PRON_CONJ.items()))
+            self.verb_conjugated = str(random.choice(verb_morphemes)) + self.v_conj_ending.replace('-', '')
+            self.verb_infinitive = str(random.choice(infinitives))
+
+            self.string = self.pronoun + ' ' + self.verb_conjugated + ' ' +  self.verb_infinitive + '.'
+
+            self.sentence.append(self.string)
+
+            self.string = '' 
+
+            self.amount -= 1
+
+        print(self.sentence)
+
+
+
     def question(self):
         pass
     def exclamation(self):
         pass
     def negative(self):
         pass
-    
-    def create(self):
 
-        while self.amount != 0:
-
-            #set a randomly choosen punctuation sign
-            punct_sign = random.choice(PUNCTUATION)
-
-            #set a randomly choosen preposition
-            preposition = random.choice(PREPOS)
-
-            #set a randomly choosen pronoun and 
-            #a conjugation ending corresponding to it
-            pronoun, conj = random.choice(list(PRON_CONJ.items())) # "il -a" etc.
-
-            for i in verbs:
-                self.s_verb = i + conj.replace('-', '') 
- 
-            random.shuffle(PUNCTUATION)
-            random.shuffle(PREPOS)
-
-            print(pronoun, self.s_verb, preposition, punct_sign)
-
-            self.amount -= 1
 
 
 
@@ -281,9 +280,14 @@ v = Verb()
 v.create_infinitive()
 v.create_verb_morpheme()
 
+
 ad = Adjective()
 ad.contacenate_adjective()
 
 
-#se = Sentence()
+se = Sentence()
 #se.create()
+se.declarative()
+#['noi asmāssamo orrrrkeāssen.', 'il marrkeassa orraðen.', 'il ātnassa orraðen.', 'tu rræapi orraðen.', 
+#'lei asmāssa rremnīapen.', 'io kupdāo arrrræen.', 'il ātnassa makupdāaðen.', 'voi kupdāete arrrræen.',
+#'loro kupdāanno makupdāaðen.', 'lei asmāssa rremnīapen.', 'voi marrkeassete orrrrkeāssen.']
